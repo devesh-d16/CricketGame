@@ -18,7 +18,7 @@ public class Main {
         String name2 = sc.nextLine();
         Team team2 = new Team(name2);
 
-        // Enter Overs
+        // Overs
         int overs;
         try{
             System.out.println("Enter number of overs: ");
@@ -52,10 +52,10 @@ public class Main {
         System.out.println("Starting game.....");
         Cricket match;
         if(toss.equals("H")) {
-            match = new Cricket(overs, team1, team2);
+            match = new Cricket(overs, team1, team2, ui);
         }
         else{
-            match = new Cricket(overs, team2, team1);
+            match = new Cricket(overs, team2, team1, ui);
         }
         match.game();
     }
