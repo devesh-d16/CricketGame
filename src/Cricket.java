@@ -1,23 +1,27 @@
-public class Cricket extends UI{
+public class Cricket{
 
-
-    static int[] scr = {0, 1, 2, 3, 4, 6, -1};
+    static int[] score = {0, 1, 2, 3, 4, 6, -1};
     Team battingFirst;
     Team battingSecond;
     int overs;
+    boolean allout;
+    boolean outscored;
+    private final UI ui;
 
-
-    public Cricket(int overs, Team battingFirst, Team battingSecond) {
+    public Cricket(int overs, Team battingFirst, Team battingSecond, UI ui) {
+        this.allout = false;
+        this.outscored = false;
         this.overs = overs;
         this.battingFirst = battingFirst;
         this.battingSecond = battingSecond;
+        this.ui = ui;
     }
 
     int simulateScore(){
-        return scr[(int) (Math.random() * 7)];
+        return score[(int) (Math.random() * 7)];
     }
 
-    int play(Team team){
+    int play(Team team, int targetRun){
         for(int i = 1; i <= overs; i++){
             for(int j = 1; j <= 6; j++){
                 int run = simulateScore();
@@ -25,37 +29,49 @@ public class Cricket extends UI{
                 if(run == -1){
                     team.addWicket();
                     if(team.getWicket() == 10){
+                        allout = true;
                         break;
                     }
                 }
                 else{
                     team.addScore(run);
+                    if(targetRun != -1 && team.getScore() > targetRun){
+                        outscored = true;
+                        break;
+                    }
                 }
             }
             System.out.println();
-            if(team.getWicket() == 10){
+            if(outscored){
+                System.out.println("outscored");
+                break;
+            }
+            else if(allout){
                 System.out.println("All out");
                 break;
             }
             else{
-                displayOvers(i);
+                ui.displayOvers(i);
             }
         }
-        displayTeamScore(team);
+        ui.displayTeamScore(team);
+        allout = false;
+        outscored = false;
         return team.getScore();
     }
 
     void game(){
-        int score1 = play(battingFirst);
-        int score2 = play(battingSecond);
+
+        int score1 = play(battingFirst, -1);
+        int score2 = play(battingSecond, score1);
+
         if(score1 > score2){
-            displayMatchResult(battingFirst.getName());
+            ui.displayMatchResult(battingFirst.getName());
         } else if (score1 < score2) {
-            displayMatchResult(battingSecond.getName());
+            ui.displayMatchResult(battingSecond.getName());
         }
         else {
             System.out.println("Match drawn");
         }
     }
-
 }
