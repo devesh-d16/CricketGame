@@ -1,4 +1,5 @@
-public class Cricket {
+public class Cricket extends UI{
+
 
     static int[] scr = {0, 1, 2, 3, 4, 6, -1};
     Team battingFirst;
@@ -20,36 +21,37 @@ public class Cricket {
         for(int i = 1; i <= overs; i++){
             for(int j = 1; j <= 6; j++){
                 int run = simulateScore();
-                System.out.print(run + "|");
+                System.out.print(run + " ");
                 if(run == -1){
-                    team.wicket++;
-                    if(team.wicket == 10){
+                    team.addWicket();
+                    if(team.getWicket() == 10){
                         break;
                     }
                 }
                 else{
-                    team.score += run;
+                    team.addScore(run);
                 }
             }
-            if(team.wicket == 10){
+            System.out.println();
+            if(team.getWicket() == 10){
                 System.out.println("All out");
                 break;
             }
             else{
-                System.out.println("Over");
+                displayOvers(i);
             }
         }
-        System.out.println(team.name + " scored " + team.score);
-        return team.score;
+        displayTeamScore(team);
+        return team.getScore();
     }
 
     void game(){
         int score1 = play(battingFirst);
         int score2 = play(battingSecond);
         if(score1 > score2){
-            System.out.println("The winner of the game is: " + battingFirst.name);
+            displayMatchResult(battingFirst.getName());
         } else if (score1 < score2) {
-            System.out.println("The winner of the game is: " + battingSecond.name);
+            displayMatchResult(battingSecond.getName());
         }
         else {
             System.out.println("Match drawn");
