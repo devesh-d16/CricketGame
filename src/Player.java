@@ -23,8 +23,8 @@ public class Player {
         return runsScored;
     }
 
-    public void setRunsScored(int runsScored) {
-        this.runsScored = runsScored;
+    public void addRuns(int runs) {
+        this.runsScored += runs;
     }
 
     public int getWicketsTaken() {
@@ -32,7 +32,7 @@ public class Player {
     }
 
     public void setWicketsTaken(int wicketsTaken) {
-        this.wicketsTaken = wicketsTaken;
+        this.wicketsTaken++;
     }
 
     public String getDesignation() {

@@ -21,7 +21,7 @@ public class UI {
         System.out.println(overs + " overs");
     }
 
-    public void displayRunByBall(int run){
+    public void displayRunByBall(int run) throws InterruptedException {
         if(run == -1){
             System.out.print("W ");
         }
@@ -31,6 +31,7 @@ public class UI {
         else{
             System.out.print(run + " ");
         }
+        Thread.sleep(500);
     }
 
     public void displayAllOutOrOutscored(boolean allout, boolean outscored){
