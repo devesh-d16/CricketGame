@@ -6,17 +6,16 @@ public class Main {
         Scanner sc = new Scanner(System.in);
         UI ui = new UI();
 
+        // Display Welcome Message
         ui.displayWelcomeMessage();
 
         // Team 1 initialisation
         System.out.println("Please enter your team name: ");
-        String name1 = sc.nextLine();
-        Team team1 = new Team(name1);
+        Team team1 = new Team(sc.nextLine());
 
         // Team 2 initialisation
         System.out.println("Please enter opponent team name: ");
-        String name2 = sc.nextLine();
-        Team team2 = new Team(name2);
+        Team team2 = new Team(sc.nextLine());
 
         // Overs
         int overs;

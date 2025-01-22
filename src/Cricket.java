@@ -22,37 +22,28 @@ public class Cricket{
     }
 
     int play(Team team, int targetRun){
-        for(int i = 1; i <= overs; i++){
-            for(int j = 1; j <= 6; j++){
+        int i = 1;
+        while(i <= overs && !outscored && !allout){
+            int j = 1;
+            while(j++ <= 6 && !outscored && !allout){
+
+                // simulate run through random function
                 int run = simulateScore();
-                System.out.print(run + " ");
+
+                // To show run per ball
+                ui.displayRunByBall(run);
+
                 if(run == -1){
-                    team.addWicket();
-                    if(team.getWicket() == 10){
-                        allout = true;
-                        break;
-                    }
+                    allout = team.addWicket(allout);
                 }
                 else{
-                    team.addScore(run);
-                    if(targetRun != -1 && team.getScore() > targetRun){
-                        outscored = true;
-                        break;
-                    }
+                    outscored = team.addScore(run, targetRun);
                 }
             }
-            System.out.println();
-            if(outscored){
-                System.out.println("outscored");
-                break;
-            }
-            else if(allout){
-                System.out.println("All out");
-                break;
-            }
-            else{
-                ui.displayOvers(i);
-            }
+            ui.displayOvers(i);
+            ui.displayAllOutOrOutscored(allout, outscored);
+            ui.displayLine();
+            i++;
         }
         ui.displayTeamScore(team);
         allout = false;
@@ -63,6 +54,7 @@ public class Cricket{
     void game(){
 
         int score1 = play(battingFirst, -1);
+        ui.displayInningsEndMessage();
         int score2 = play(battingSecond, score1);
 
         if(score1 > score2){
