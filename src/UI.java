@@ -8,10 +8,6 @@ public class UI {
         System.out.println("------------------------------------");
     }
 
-    public void displayLine(){
-        System.out.println("------------------------------------");
-    }
-
     public void displayTeamScore(Team team){
         System.out.println(team.getName() + " scored " + team.getScore());
     }
@@ -58,5 +54,6 @@ public class UI {
         System.out.println("------------------------------------");
         System.out.println("The winner is: " + name);
         System.out.println("------------------------------------");
+        System.out.println();
     }
 }

@@ -1,7 +1,10 @@
 import java.util.Scanner;
 
 public class Game {
-    void run(Scanner sc, UI ui) throws InterruptedException {
+    UI ui = new UI();
+    Scanner sc = new Scanner(System.in);
+
+    void run() throws InterruptedException {
 
         // Display Welcome Message
         ui.displayWelcomeMessage();
@@ -15,13 +18,17 @@ public class Game {
         Team team2 = new Team(sc.nextLine());
 
         // input overs
-        int overs = inputOver(sc);
+        int overs = inputOver();
         sc.nextLine();
 
         // toss
-        Team battingTeam = toss(sc, team1, team2);
+        Team battingTeam = toss(team1, team2);
 
         // Game starts
+        gameStart(battingTeam, team1, team2, overs);
+    }
+
+    void gameStart(Team battingTeam, Team team1, Team team2, int overs) throws InterruptedException {
         System.out.println("Starting game.....");
         Cricket match;
         if(battingTeam == team1) {
@@ -33,8 +40,7 @@ public class Game {
         match.game();
     }
 
-
-    Team toss(Scanner sc, Team team1, Team team2){
+    Team toss(Team team1, Team team2){
         Toss tossResult = null;
         while (tossResult == null) {
             System.out.println("Toss time....Heads or Tails (H/T):");
@@ -49,7 +55,7 @@ public class Game {
         return (tossResult == Toss.TAILS) ? team2 : team1;
     }
 
-    int inputOver(Scanner sc){
+    int inputOver(){
         int overs = -1;
         boolean validOvers = false;
 
