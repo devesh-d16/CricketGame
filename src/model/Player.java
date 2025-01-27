@@ -1,10 +1,12 @@
+package model;
+
 public class Player {
-    String name;
+    private final String name;
     int runsScored;
     int wicketsTaken;
-    String designation;
+    private final Designation designation;
 
-    public Player(String name,String designation) {
+    public Player(String name, Designation designation) {
         this.name = name;
         this.runsScored = 0;
         this.wicketsTaken = 0;
@@ -13,10 +15,6 @@ public class Player {
 
     public String getName() {
         return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
     }
 
     public int getRunsScored() {
@@ -35,11 +33,9 @@ public class Player {
         this.wicketsTaken++;
     }
 
-    public String getDesignation() {
+    public Designation getDesignation() {
         return designation;
     }
 
-    public void setDesignation(String designation) {
-        this.designation = designation;
-    }
+
 }
