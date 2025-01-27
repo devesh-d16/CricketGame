@@ -41,18 +41,30 @@ public class UI {
         return new Player(name, designation);
     }
 
-    public void displayInningsEndMessage(){
+    public void displayInningsEndMessage(Team team) {
         System.out.println();
         System.out.println("------------------------------------");
         System.out.println("------------Innings Over------------");
         System.out.println("------------------------------------");
-        System.out.println();
+
+        int runs = team.getScore();
+        int wickets = team.getWicket();
+
+        System.out.println("Runs scored by " + team.getName() + " : " + runs + "/" + wickets);
     }
 
-    public void displayMatchResult(String name){
+
+    public void displayMatchResult(Team teamWon, Team teamLost, int won) {
         System.out.println();
         System.out.println("------------------------------------");
-        System.out.println("The winner is: " + name);
+        if(won == 0){
+            int difference = teamWon.getScore() - teamLost.getScore();
+            System.out.println(teamWon.getName() + " won by " + difference + " runs.");
+        }
+        else{
+            int difference = 10 - teamWon.getWicket();
+            System.out.println(teamWon.getName() + " won by " + difference + " wickets.");
+        }
         System.out.println("------------------------------------");
         System.out.println();
     }
@@ -70,6 +82,7 @@ public class UI {
     }
 
     public void displayOverStat(int overNo, int runThisOver){
+        System.out.println();
         System.out.println("Runs scored in over " + overNo + ": " + runThisOver);
     }
 
@@ -90,6 +103,8 @@ public class UI {
         return overs;
     }
 
+
+
     public Toss inputToss() {
         Toss tossResult = null;
         while(tossResult == null){
@@ -104,11 +119,10 @@ public class UI {
         return tossResult;
     }
 
-// ==============================================================================
-    void printTeamStats(Team team){
+    public void printTeamStats(Team team){
         List<Player> players = team.getPlayers();
         for (Player p : players) {
-            System.out.println(p.getName() + " " + p.getDesignation() + " " + p.getRunsScored() + " " + p.getWicketsTaken());
+            System.out.println(p.getName() + " " + p.getDesignation() + " " + p.getRunsScored() + " " + p.getBallsFaced());
         }
     }
 }
