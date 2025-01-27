@@ -1,5 +1,6 @@
-import java.util.ArrayList;
-import java.util.List;
+package model;
+
+import java.util.*;
 
 public class Team {
     private int score;
@@ -7,13 +8,14 @@ public class Team {
     private final String name;
     private final List<Player> players;
 
-    public Team(String name){
+    public Team(String name, List<Player> players) {
         score = 0;
         wicket = 0;
         this.name = name;
-        this.players = new ArrayList<>();
+        this.players = new ArrayList<>(players);
     }
 
+    //    NOT IMPLEMENTED YET
     public List<Player> getPlayers() {
         return players;
     }
