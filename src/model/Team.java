@@ -21,12 +21,7 @@ public class Team {
     }
 
     public void addPlayers(Player player) {
-        if(players.size() < 11){
-            players.add(player);
-        }
-        else{
-            System.out.println("11 players are already in the team");
-        }
+        players.add(player);
     }
 
     public int getScore() {

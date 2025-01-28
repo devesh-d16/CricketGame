@@ -1,5 +1,6 @@
 package controller;
 
+import config.GameConfig;
 import model.Player;
 import model.Team;
 import model.Toss;
@@ -10,10 +11,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class GameController {
-//    private final Team team;
+
     private final UI ui;
-//    private final Player player;
-//    private final Toss toss;
     private final GameService gameService;
 
 
@@ -25,7 +24,7 @@ public class GameController {
     public Team initializeTeam(UI ui){
         String teamName = ui.inputTeamName();
         List<Player> players = new ArrayList<>();
-        for(int i  = 1; i <= 11; i++){
+        for(int i = 1; i <= GameConfig.MAX_PLAYERS; i++){
             players.add(ui.inputPlayer(i));
         }
         return new Team(teamName, players);

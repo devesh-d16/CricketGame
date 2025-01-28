@@ -1,5 +1,6 @@
 package ui;
 
+import config.GameConfig;
 import model.Designation;
 import model.Player;
 import model.Team;
@@ -26,7 +27,7 @@ public class UI {
 
     public Player inputPlayer(int playerNumber){
         System.out.println("Enter details for Player " + playerNumber + ":");
-        System.out.println("Name: ");
+        System.out.print("Name: ");
         String name = sc.nextLine();
 
         Designation designation = null;
@@ -41,45 +42,60 @@ public class UI {
         return new Player(name, designation);
     }
 
-    public void displayInningsEndMessage(){
+    public void displayInningsEndMessage(Team team) {
+        int runs = team.getScore();
+        int wickets = team.getWicket();
+
         System.out.println();
-        System.out.println("------------------------------------");
-        System.out.println("------------Innings Over------------");
-        System.out.println("------------------------------------");
+        System.out.println("Runs scored by " + team.getName() + " : " + runs + "/" + wickets);
+        System.out.println();
+        System.out.println("---------------------------------------------------------------");
+        System.out.println("--------------------------Innings Over-------------------------");
+        System.out.println("---------------------------------------------------------------");
         System.out.println();
     }
 
-    public void displayMatchResult(String name){
+
+    public void displayMatchResult(Team teamWon, Team teamLost, int won) {
         System.out.println();
-        System.out.println("------------------------------------");
-        System.out.println("The winner is: " + name);
-        System.out.println("------------------------------------");
+        System.out.println("---------------------------------------------------------------");
+        if(won == 0){
+            int difference = teamWon.getScore() - teamLost.getScore();
+            System.out.println(teamWon.getName() + " won by " + difference + " runs.");
+        }
+        else{
+            int difference = 10 - teamWon.getWicket();
+            System.out.println(teamWon.getName() + " won by " + difference + " wickets.");
+        }
+        System.out.println("---------------------------------------------------------------");
         System.out.println();
     }
 
     public void displayRunByBall(int run){
-        if(run == -1){
-            System.out.print("W ");
-        }
-        else if(run == 0){
-            System.out.print(". ");
-        }
-        else{
-            System.out.print(run + " ");
+        switch(run) {
+            case -1:
+                System.out.println("W ");
+                break;
+            case 0:
+                System.out.println(". ");
+                break;
+            default:
+                System.out.print(run + " ");
         }
     }
 
     public void displayOverStat(int overNo, int runThisOver){
+        System.out.println();
         System.out.println("Runs scored in over " + overNo + ": " + runThisOver);
     }
 
     public int inputOvers() {
         int overs = -1;
-        while(overs < 1 || overs > 100){
+        while(overs < GameConfig.MIN_OVERS || overs > GameConfig.MAX_OVERS){
             System.out.println("Enter the number of overs (1-100): ");
             try{
                 overs = Integer.parseInt(sc.nextLine());
-                if(overs < 1 || overs > 100){
+                if(overs < GameConfig.MIN_OVERS  || overs > GameConfig.MAX_OVERS ){
                     System.err.println("Invalid input! Please enter a value between 1 and 100");
                 }
             }
@@ -104,11 +120,18 @@ public class UI {
         return tossResult;
     }
 
-// ==============================================================================
-    void printTeamStats(Team team){
+    public void printTeamStats(Team team) {
         List<Player> players = team.getPlayers();
+
+        System.out.println("---------------------------------------------------------------");
+        System.out.println("=========================SCOREBOARD============================");
+        System.out.println("---------------------------------------------------------------");
+        System.out.printf("%-20s %-15s %-12s %-12s%n", "Name", "Designation", "Runs Scored", "Balls Faced");
+        System.out.println("---------------------------------------------------------------");
+
         for (Player p : players) {
-            System.out.println(p.getName() + " " + p.getDesignation() + " " + p.getRunsScored() + " " + p.getWicketsTaken());
+            System.out.printf("%-20s %-15s %-12d %-12d%n",
+                    p.getName(), p.getDesignation(), p.getRunsScored(), p.getBallsFaced());
         }
     }
 }
