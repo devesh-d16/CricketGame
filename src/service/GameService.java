@@ -1,6 +1,8 @@
 package service;
 
+import config.GameConfig;
 import controller.GameController;
+import model.Designation;
 import model.Player;
 import model.Team;
 import model.Toss;
@@ -36,13 +38,19 @@ public class GameService {
     }
 
     private boolean gameEnd(Team batting, int targetRun){
-        return (batting.getWicket() == 10 || (targetRun != -1 && batting.getScore() >= targetRun));
+        return (batting.getWicket() == 10 || (targetRun != -1 && batting.getScore() > targetRun));
     }
 
     public void simulateOver(Team batting, int targetRun, int overNo, StrikePair strikePair){
         int runThisOver = 0;
         for(int ball = 1; (ball <= 6) && (!gameEnd(batting, targetRun)); ball++){
-            int run = utils.getRandomScore();
+            int run = 0;
+            if(strikePair.playerOnStrike.getDesignation() == Designation.BATTER){
+                run = utils.getRandomBatterWeightScore(GameConfig.BATTER_WEIGHT);
+            }
+            else{
+                run = utils.getRandomBowlerWeightScore(GameConfig.BOWLER_WEIGHT);
+            }
 
             if(run != -1) runThisOver += run;
 
@@ -54,7 +62,6 @@ public class GameService {
                 }
             }
             else{
-//                System.out.println(strikePair.playerOnStrike.getName() +  "YESSS");
                 strikePair.playerOnStrike.addRuns(run);
                 batting.addScore(run);
             }
@@ -79,12 +86,12 @@ public class GameService {
 
     public void simulateMatch(Team battingFirst, Team battingSecond, int overs){
         int scoreBatting = simulateInning(battingFirst, -1, overs);
-        ui.displayInningsEndMessage(battingFirst);
         ui.printTeamStats(battingFirst);
+        ui.displayInningsEndMessage(battingFirst);
 
         int scoreBattingSecond = simulateInning(battingSecond, scoreBatting, overs);
-        ui.displayInningsEndMessage(battingSecond);
         ui.printTeamStats(battingSecond);
+        ui.displayInningsEndMessage(battingSecond);
 
         result(battingFirst, battingSecond);
     }

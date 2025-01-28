@@ -46,6 +46,4 @@ public class Player {
     public Designation getDesignation() {
         return designation;
     }
-
-
 }
