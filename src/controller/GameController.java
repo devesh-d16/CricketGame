@@ -11,10 +11,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class GameController {
-//    private final Team team;
+
     private final UI ui;
-//    private final Player player;
-//    private final Toss toss;
     private final GameService gameService;
 
 

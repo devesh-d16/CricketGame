@@ -6,7 +6,6 @@ import model.Player;
 import model.Team;
 import model.Toss;
 
-import java.sql.SQLOutput;
 import java.util.List;
 import java.util.Scanner;
 
@@ -28,7 +27,7 @@ public class UI {
 
     public Player inputPlayer(int playerNumber){
         System.out.println("Enter details for Player " + playerNumber + ":");
-        System.out.println("Name: ");
+        System.out.print("Name: ");
         String name = sc.nextLine();
 
         Designation designation = null;
@@ -73,14 +72,15 @@ public class UI {
     }
 
     public void displayRunByBall(int run){
-        if(run == -1){
-            System.out.print("W ");
-        }
-        else if(run == 0){
-            System.out.print(". ");
-        }
-        else{
-            System.out.print(run + " ");
+        switch(run) {
+            case -1:
+                System.out.println("W ");
+                break;
+            case 0:
+                System.out.println(". ");
+                break;
+            default:
+                System.out.print(run + " ");
         }
     }
 
@@ -95,7 +95,7 @@ public class UI {
             System.out.println("Enter the number of overs (1-100): ");
             try{
                 overs = Integer.parseInt(sc.nextLine());
-                if(overs < GameConfig.MIN_OVERS  || overs > GameConfig.MIN_OVERS ){
+                if(overs < GameConfig.MIN_OVERS  || overs > GameConfig.MAX_OVERS ){
                     System.err.println("Invalid input! Please enter a value between 1 and 100");
                 }
             }

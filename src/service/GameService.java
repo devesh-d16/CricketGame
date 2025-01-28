@@ -1,16 +1,11 @@
 package service;
 
 import config.GameConfig;
-import controller.GameController;
 import model.Designation;
 import model.Player;
 import model.Team;
-import model.Toss;
 import ui.UI;
 import utils.GameUtils;
-
-
-import java.util.List;
 
 public class GameService {
 
@@ -52,7 +47,6 @@ public class GameService {
                 run = utils.getRandomBowlerWeightScore(GameConfig.BOWLER_WEIGHT);
             }
 
-            if(run != -1) runThisOver += run;
 
             if(run == -1){
                 batting.addWicket();
@@ -62,6 +56,7 @@ public class GameService {
                 }
             }
             else{
+                runThisOver += run;
                 strikePair.playerOnStrike.addRuns(run);
                 batting.addScore(run);
             }
@@ -89,7 +84,7 @@ public class GameService {
         ui.printTeamStats(battingFirst);
         ui.displayInningsEndMessage(battingFirst);
 
-        int scoreBattingSecond = simulateInning(battingSecond, scoreBatting, overs);
+        simulateInning(battingSecond, scoreBatting, overs);
         ui.printTeamStats(battingSecond);
         ui.displayInningsEndMessage(battingSecond);
 
